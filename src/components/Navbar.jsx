@@ -32,7 +32,7 @@ export const Navbar = () => {
   ];
 
   return (
-    <header className="fixed h-[80px] w-full flex items-center justify-between bg-black/30 text-white px-2 lg:px-10">
+    <header className="fixed h-[80px] w-full flex items-center justify-between bg-black/30 text-white px-2 lg:px-10 z-10">
       <Logo />
 
 
