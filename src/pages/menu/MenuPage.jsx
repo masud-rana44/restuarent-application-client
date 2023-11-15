@@ -5,6 +5,7 @@ import { useMenuData } from "../../hooks/useMenuData"
 import { Deserts } from "./Deserts"
 import { Pizza } from "./Pizza"
 import { Salads } from "./Salads"
+import { Soups } from "./Soups"
 
 const MenuPage = () => {
   const { menu } = useMenuData()
@@ -12,6 +13,7 @@ const MenuPage = () => {
   const deserts = menu.filter(item => item.category === 'dessert')
   const pizza = menu.filter(item => item.category === 'pizza')
   const salads = menu.filter(item => item.category === 'salad')
+  const soups = menu.filter(item => item.category === 'soup')
 
   return (
     <div>
@@ -20,6 +22,7 @@ const MenuPage = () => {
       <Deserts items={deserts.slice(0, 6)}/>
       <Pizza items={pizza.slice(0, 6)}/>
       <Salads items={salads.slice(0, 6)}/>
+      <Soups items={soups.slice(0, 6)}/>
     </div>
   )
 }
