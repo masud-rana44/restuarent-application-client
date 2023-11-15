@@ -6,6 +6,7 @@ import { Deserts } from "./Deserts"
 import { Pizza } from "./Pizza"
 import { Salads } from "./Salads"
 import { Soups } from "./Soups"
+import { PageTitle } from "../../components/PageTitle"
 
 const MenuPage = () => {
   const { menu } = useMenuData()
@@ -17,6 +18,7 @@ const MenuPage = () => {
 
   return (
     <div>
+      <PageTitle title='Menu | Bistro Boss'/>
       <PageBanner title='OUR MENU' description='Would you like to try a dish?' bgImg={bannerImg}/>
       <Offer/>
       <Deserts items={deserts.slice(0, 6)}/>

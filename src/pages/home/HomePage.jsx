@@ -8,9 +8,11 @@ import { CallUs } from "./CallUs";
 import { ChefRecommends } from "./ChefRecommends";
 import { FeaturedItem } from "./FeaturedItem";
 import { Testimonials } from "./Testimonials";
+import { PageTitle } from "../../components/PageTitle"
 
 const HomePage = () => {
   return <div >
+    <PageTitle title='Home | Bistro Boss'/>
     <Banner/>
     <OrderOnline/>
     <Container className='mt-20'>

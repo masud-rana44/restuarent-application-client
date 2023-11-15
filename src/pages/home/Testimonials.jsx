@@ -18,14 +18,13 @@ export const Testimonials = () => {
     const fetchReviews = async() => {
       const res = await fetch('/reviews.json')
       const data = await res.json()
-      console.log(data)
       setReviews(data)
     }
     fetchReviews()
   }, [])
 
   return (
-    <Container className="mt-20">
+    <Container className="my-20">
       <SectionHeading title='TESTIMONIALS' subtitle='---What Our Clients Say---'/>
       <Swiper navigation={true} modules={[Navigation]} className='mySwiper mt-8'>
         {reviews.map(review => <SwiperSlide key={review._id}>
