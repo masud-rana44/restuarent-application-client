@@ -6,6 +6,8 @@ import { Container } from "../../components/Container";
 import { FromOurMenu } from "./FromOurMenu";
 import { CallUs } from "./CallUs";
 import { ChefRecommends } from "./ChefRecommends";
+import { FeaturedItem } from "./FeaturedItem";
+import { Testimonials } from "./Testimonials";
 
 const HomePage = () => {
   return <div >
@@ -17,6 +19,8 @@ const HomePage = () => {
     <FromOurMenu/>
     <CallUs/>
     <ChefRecommends/>
+    <FeaturedItem/>
+    <Testimonials/>
   </div>;
 };
 
