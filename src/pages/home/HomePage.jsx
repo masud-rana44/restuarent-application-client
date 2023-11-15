@@ -5,6 +5,7 @@ import { chefService } from "../../assets/home";
 import { Container } from "../../components/Container";
 import { FromOurMenu } from "./FromOurMenu";
 import { CallUs } from "./CallUs";
+import { ChefRecommends } from "./ChefRecommends";
 
 const HomePage = () => {
   return <div >
@@ -15,6 +16,7 @@ const HomePage = () => {
     </Container>
     <FromOurMenu/>
     <CallUs/>
+    <ChefRecommends/>
   </div>;
 };
 

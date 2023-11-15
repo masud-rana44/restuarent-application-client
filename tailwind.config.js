@@ -6,7 +6,8 @@ export default {
       colors: {
         dark1: "#151515",
         dark2: "#1F2937",
-        dark: "#737373"
+        dark: "#737373",
+        gray1: "#F3F3F3"
       },
       fontFamily: {
         cinzel: ["Cinzel", "serif"],
