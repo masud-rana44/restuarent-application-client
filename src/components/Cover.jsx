@@ -1,10 +1,10 @@
 
-export const Cover = ({title, description, bgImg, bgColor }) => {
+export const Cover = ({title, description, bgImg, bgColor, textColor }) => {
   return (
-    <div style={{backgroundImage: `url(${bgImg})`}} className='relative bg-center bg-cover py-20 px-28 '>
-      <div className="absolute w-full h-full inset-y-0 bg-black/20 z-10"/>
-      <div style={{ backgroundColor: bgColor}} className='p-16 text-center z-20'>
-        <h4 className="text-2xl text-dark1 font-cinzel capitalize">{title}</h4>
+    <div style={{backgroundImage: `url(${bgImg})`}} className='relative bg-center bg-cover p-20 z-0'>
+      {/* <div className="absolute w-full h-full inset-0 bg-black/30 z-10"/> */}
+      <div style={{ backgroundColor: bgColor}} className='p-16 px-28  text-center z-20'>
+        <h4 style={{ color: textColor}} className="text-2xl font-cinzel capitalize">{title}</h4>
         <p className="text-dark">{description}</p>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FreeMode, Pagination, Navigation, Thumbs } from 'swiper/modules';
+import { FreeMode, Pagination, Navigation, Thumbs, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { img1, img2, img3, img4, img5, img6 } from "../../assets/home"
@@ -24,11 +24,12 @@ export const Banner = () => {
           '--swiper-pagination-color': 'blue',
         }}
         loop={true}
+        autoplay={true}
         spaceBetween={10}
         navigation={true}
         pagination={true}
         thumbs={{ swiper: thumbsSwiper }}
-        modules={[FreeMode, Pagination, Thumbs]}
+        modules={[FreeMode, Pagination, Thumbs, Autoplay]}
         className="mySwiper2 max-h-screen "
       >
        {bannerImages.map((img, idx) => 
