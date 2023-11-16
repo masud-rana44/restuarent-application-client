@@ -3,6 +3,7 @@ import { useAuth } from "../contexts/authContext";
 import { useAxios } from "../hooks/useAxios";
 import { Button } from "./Button";
 import Swal from "sweetalert2";
+import { useCart } from "../hooks/useCart";
 
 export const FoodCard = ({ item }) => {
   const { _id, name, image, recipe, price} = item;
@@ -10,12 +11,11 @@ export const FoodCard = ({ item }) => {
   const axiosSecure = useAxios()
   const navigate = useNavigate()
   const location = useLocation()
+  const { cartDataRefetch} = useCart()
 
   const handleAddToCart = async() => {
-    console.log('Add to cart')
     if(user && user?.email)  {
-
-    const res = await  axiosSecure.post('/cart', {
+    const res = await  axiosSecure.post("/cart", {
         email: user.email,
         menuId: _id,
         name,
@@ -23,7 +23,12 @@ export const FoodCard = ({ item }) => {
         price
       })
     
+    // If, there is a user
       if(res.data.acknowledged) {
+        // revalidate the data from server
+        cartDataRefetch()
+
+        // show success message
         Swal.fire({
           icon: "success",
           title: "Successfully added!",
@@ -32,6 +37,7 @@ export const FoodCard = ({ item }) => {
         });
       }
 
+    // If, there is no user
     } else {
           Swal.fire({
           title: "Login First?",

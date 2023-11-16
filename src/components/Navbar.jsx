@@ -4,10 +4,12 @@ import Badge from '@mui/material/Badge';
 import {  Menu, ShoppingCart, X} from "lucide-react";
 import { UserIcon } from "./UserIcon";
 import { useState } from "react";
+import { useCart } from "../hooks/useCart";
 
 export const Navbar = () => {
   const { pathname } = useLocation()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { cart} = useCart()
 
   const links = [
     {
@@ -49,7 +51,7 @@ export const Navbar = () => {
             </li>
           ))}
         </ul>
-        <Badge badgeContent={4} color="primary">
+        <Badge badgeContent={cart?.length || 0} color="primary">
           <ShoppingCart className="w-6 h-6 cursor-pointer" />
         </Badge>
           <UserIcon/>
@@ -58,7 +60,7 @@ export const Navbar = () => {
 
       {/* for mobile */}
       <div className="lg:hidden flex items-center space-x-4">
-        <Badge badgeContent={4} color="primary">
+        <Badge badgeContent={cart?.length || 0} color="primary">
        <ShoppingCart className="w-6 h-6 cursor-pointer" />
        </Badge>
           <UserIcon/>
