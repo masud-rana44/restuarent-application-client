@@ -168,9 +168,10 @@ export default function LoginPage() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="/login" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
+
+                   <div onClick={() => navigate('/signup')} className='text-sm cursor-pointer text-blue-400'>
+                   {"Don't have an account? Sign Up"}
+                  </div>
                 </Grid>
               </Grid>
               <Copyright sx={{ mt: 5 }} />

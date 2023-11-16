@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Swal from 'sweetalert2'
+import { useForm } from "react-hook-form"
 
 import bg from '../../assets/others/authentication1.png'
 import { useAuth } from '../../contexts/authContext';
@@ -35,22 +36,15 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function RegisterPage() {
-  const { createNewUser, updateUser } = useAuth()
+  const { createNewUser, updateUser, reset } = useAuth()
   const navigate = useNavigate()
+  const { register, handleSubmit } = useForm()
 
-  const handleSubmit = async(event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const value = ({
-      name: data.get('name'),
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-
+  const onSubmit = async(data) => {
     try {
-      const userCredentials = await createNewUser(value.email, value.password)
+      const userCredentials = await createNewUser(data.email, data.password)
       if(userCredentials.user) {
-        await updateUser(value.name, 'https://ibb.co/TB4Cmd3')
+        await updateUser(data.name, 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww')
 
         Swal.fire({
           icon: "success",
@@ -58,6 +52,7 @@ export default function RegisterPage() {
           showConfirmButton: false,
           timer: 1500
         });
+        reset()
         navigate('/')
       }
     } catch (error) {
@@ -101,9 +96,9 @@ export default function RegisterPage() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Sign up
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -114,7 +109,12 @@ export default function RegisterPage() {
                 type='text'
                 autoComplete="name"
                 autoFocus
+                {...register(
+                  'name',
+                  { required: true}
+                )}
               />
+
               <TextField
                 margin="normal"
                 required
@@ -123,6 +123,7 @@ export default function RegisterPage() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                { ...register('email', { required: true})}
               />
               <TextField
                 margin="normal"
@@ -133,6 +134,7 @@ export default function RegisterPage() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                {...register('password', { required: true})}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
@@ -153,9 +155,9 @@ export default function RegisterPage() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="/signup" variant="body2">
+                  <div onClick={() => navigate('/login')} className='text-sm cursor-pointer text-blue-400'>
                     {"Already have an account? Login"}
-                  </Link>
+                  </div>
                 </Grid>
               </Grid>
               <Copyright sx={{ mt: 5 }} />
