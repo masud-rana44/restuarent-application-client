@@ -16,7 +16,7 @@ export const Testimonials = () => {
 
   useEffect(() => {
     const fetchReviews = async() => {
-      const res = await fetch('/reviews.json')
+      const res = await fetch('http://localhost:5000/reviews')
       const data = await res.json()
       setReviews(data)
     }

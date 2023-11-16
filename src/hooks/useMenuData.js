@@ -5,7 +5,7 @@ export const useMenuData = () => {
 
   useEffect(() => {
     const fetchMenu = async () => {
-      const res = await fetch('./menu.json')
+      const res = await fetch('http://localhost:5000/menus')
       const data = await res.json()
       setMenu(data)
     }

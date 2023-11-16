@@ -7,6 +7,9 @@ import ShopPage from "../pages/shop/ShopPage";
 import LoginPage from "../pages/login/LoginPage";
 import ContactPage from "../pages/contact/ContactPage";
 import RegisterPage from "../pages/register/RegisterPage";
+import { PrivateRoute } from "../components/PrivateRoute";
+import DashboardPage from "../pages/dashboard/DashboardPage";
+import { PublicRoutes } from "../components/PublicRoutes";
 
 const router = createBrowserRouter([
   {
@@ -22,10 +25,16 @@ const router = createBrowserRouter([
   },
   {
     path: '/login',
-    element: <LoginPage/>
+    element: <PublicRoutes><LoginPage/></PublicRoutes>
   },
   { path: '/signup', 
-    element: <RegisterPage/>
+    element: <PublicRoutes><RegisterPage/></PublicRoutes>
+  },
+  {
+    path: '/dashboard',
+    element: <PrivateRoute>
+      <DashboardPage/>
+    </PrivateRoute>
   }
 ]);
 

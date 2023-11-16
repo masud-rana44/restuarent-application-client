@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { Logo } from "./Logo";
-import { Menu, ShoppingCart, X} from "lucide-react";
+import Badge from '@mui/material/Badge';
+import {  Menu, ShoppingCart, X} from "lucide-react";
 import { UserIcon } from "./UserIcon";
 import { useState } from "react";
 
@@ -48,14 +49,18 @@ export const Navbar = () => {
             </li>
           ))}
         </ul>
+        <Badge badgeContent={4} color="primary">
           <ShoppingCart className="w-6 h-6 cursor-pointer" />
+        </Badge>
           <UserIcon/>
       </nav>
 
 
       {/* for mobile */}
       <div className="lg:hidden flex items-center space-x-4">
+        <Badge badgeContent={4} color="primary">
        <ShoppingCart className="w-6 h-6 cursor-pointer" />
+       </Badge>
           <UserIcon/>
 
             <div onClick={() => setIsMenuOpen(open => !open)} className=" h-10 w-10 rounded-full bg-yellow-400  flex items-center justify-center cursor-pointer">

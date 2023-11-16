@@ -17,7 +17,7 @@ import Swal from 'sweetalert2'
 import bg from '../../assets/others/authentication1.png'
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/authContext';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -40,6 +40,9 @@ export default function LoginPage() {
   const [ isDisabled, setIsDisabled] = useState(false)
   const { loginUser } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
+
+  const to = location.state?.from?.pathname || '/'
 
   useEffect(() => loadCaptchaEnginge(6), [])
 
@@ -60,7 +63,7 @@ export default function LoginPage() {
           showConfirmButton: false,
           timer: 1500
         });
-        navigate('/')
+        navigate(to)
       }
     } catch (error) {
        Swal.fire({

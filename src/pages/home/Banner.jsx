@@ -26,11 +26,10 @@ export const Banner = () => {
         loop={true}
         autoplay={true}
         spaceBetween={10}
-        navigation={true}
         pagination={true}
         thumbs={{ swiper: thumbsSwiper }}
         modules={[FreeMode, Pagination, Thumbs, Autoplay]}
-        className="mySwiper2 max-h-screen "
+        className="mySwiper2 max-h-screen"
       >
        {bannerImages.map((img, idx) => 
         <SwiperSlide key={idx}>
