@@ -12,9 +12,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
+import Swal from 'sweetalert2'
 
 import bg from '../../assets/others/authentication1.png'
 import { useEffect, useState } from 'react';
+import { useAuth } from '../../contexts/authContext';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -34,17 +37,39 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function LoginPage() {
-  const [ isDisabled, setIsDisabled] = useState(true)
+  const [ isDisabled, setIsDisabled] = useState(false)
+  const { loginUser } = useAuth()
+  const navigate = useNavigate()
 
   useEffect(() => loadCaptchaEnginge(6), [])
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const value = ({
       email: data.get('email'),
       password: data.get('password'),
     });
+
+    try {
+      const userCredentials= await loginUser(value.email, value.password)
+      if(userCredentials.user) {
+        Swal.fire({
+          icon: "success",
+          title: "Logged in successfully!",
+          showConfirmButton: false,
+          timer: 1500
+        });
+        navigate('/')
+      }
+    } catch (error) {
+       Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error?.message || "Something went wrong!",
+      });
+    }
+
   };
 
   const handleCaptcha = (event) => {
@@ -78,7 +103,7 @@ export default function LoginPage() {
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
-              my: 'auto',
+              my: 3.6,
               mx: 4,
               display: 'flex',
               flexDirection: 'column',

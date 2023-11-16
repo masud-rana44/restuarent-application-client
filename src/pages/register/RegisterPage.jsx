@@ -11,8 +11,11 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Swal from 'sweetalert2'
 
 import bg from '../../assets/others/authentication1.png'
+import { useAuth } from '../../contexts/authContext';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -32,13 +35,38 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function RegisterPage() {
-  const handleSubmit = (event) => {
+  const { createNewUser, updateUser } = useAuth()
+  const navigate = useNavigate()
+
+  const handleSubmit = async(event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const value = ({
+      name: data.get('name'),
       email: data.get('email'),
       password: data.get('password'),
     });
+
+    try {
+      const userCredentials = await createNewUser(value.email, value.password)
+      if(userCredentials.user) {
+        await updateUser(value.name, 'https://ibb.co/TB4Cmd3')
+
+        Swal.fire({
+          icon: "success",
+          title: "Account created successfully!",
+          showConfirmButton: false,
+          timer: 1500
+        });
+        navigate('/')
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error?.message || "Something went wrong!",
+      });
+    }
   };
 
   return (
@@ -80,11 +108,21 @@ export default function RegisterPage() {
                 margin="normal"
                 required
                 fullWidth
+                id="name"
+                label="Your Name"
+                name="name"
+                type='text'
+                autoComplete="name"
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
                 id="email"
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                autoFocus
               />
               <TextField
                 margin="normal"
