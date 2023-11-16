@@ -1,8 +1,10 @@
 import { CalendarCheck2, CalendarDays, Home, Mail, Menu, MessageSquare, ShoppingBag, ShoppingCart, Wallet } from "lucide-react"
 import { Logo } from "../../components/Logo"
-import { NavLink } from "react-router-dom"
+import { NavLink, useLocation } from "react-router-dom"
 
 export const Sidebar = () => {
+  const { pathname } = useLocation()
+
   const links = [
     {
       label: 'User Home',
@@ -66,7 +68,7 @@ export const Sidebar = () => {
       <nav className="mt-8">
         <ul className="flex flex-col space-y-3">
           {links.map(link => <li key={link.to} >
-            <NavLink to={link.to} className="uppercase font-medium flex items-center space-x-4 hover:text-gray-200 transition"><link.Icon className="h-6 w-6"/> <span>{link.label}</span></NavLink>
+            <NavLink to={link.to} className={`uppercase font-medium flex items-center space-x-4 hover:text-gray-200 transition ${pathname === link.to && 'text-white'}`}><link.Icon className="h-6 w-6"/> <span>{link.label}</span></NavLink>
           </li>)}
         </ul>
         <hr className="my-6"/>
