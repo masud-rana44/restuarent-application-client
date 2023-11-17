@@ -9,6 +9,7 @@ import { Trash2 } from 'lucide-react';
 import Swal from 'sweetalert2';
 import { useAxios } from '../../../hooks/useAxios';
 import { useUser } from '../../../hooks/useUser';
+import { RoleMenu } from './RoleMenu';
 
 
 
@@ -67,7 +68,9 @@ export default function UsersTable({data}) {
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
-              <TableCell >{row.role || 'user'}</TableCell>
+              <TableCell >
+                <RoleMenu role={row.role || "user"} id={row._id} name={row.name}/>
+              </TableCell>
               <TableCell >
                 <div className='p-2 rounded-sm '>
                   <Trash2 onClick={() => handleDeleteUser(row._id)} className='text-red-600 cursor-pointer'/>
