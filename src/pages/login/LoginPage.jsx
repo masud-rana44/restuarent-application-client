@@ -39,7 +39,7 @@ const defaultTheme = createTheme();
 
 export default function LoginPage() {
   const [ isDisabled, setIsDisabled] = useState(false)
-  const { loginUser } = useAuth()
+  const { loginUser, setIsLoading } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -72,6 +72,7 @@ export default function LoginPage() {
         title: "Oops...",
         text: error?.message || "Something went wrong!",
       });
+      setIsLoading(false)
     }
 
   };

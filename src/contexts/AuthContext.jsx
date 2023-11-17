@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async user => {
       setUser(user)
+      setIsLoading(false)
       if(user) {
         const res  = await axiosPublic.post('/jwt', {
           email: user.email
@@ -25,7 +26,6 @@ export const AuthProvider = ({ children }) => {
       } else {
         localStorage.removeItem('bistro-token')
       }
-      setIsLoading(false)
     })
 
     return () => unsubscribe()
@@ -68,6 +68,7 @@ export const AuthProvider = ({ children }) => {
   const value = {
     user,
     isLoading,
+    setIsLoading,
     createNewUser,
     signInWithGoogle,
     updateUser,

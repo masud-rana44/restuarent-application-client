@@ -10,7 +10,7 @@ export const Sidebar = () => {
 
   if(isPending) return <PageLoader/>
 
-  const userlinks = [
+  const userLinks = [
     {
       label: 'User Home',
       to: '/dashboard/user-home',
@@ -43,7 +43,7 @@ export const Sidebar = () => {
     },
   ]
 
-    const adminlinks = [
+    const adminLinks = [
     {
       label: 'Admin Home',
       to: '/dashboard/user-home',
@@ -51,7 +51,7 @@ export const Sidebar = () => {
     },
     {
       label: 'Add Items',
-      to: '/dashboard/add-items',
+      to: '/dashboard/items/new',
       Icon: Utensils
     },
     {
@@ -95,7 +95,7 @@ export const Sidebar = () => {
 
   ];
 
-  const links = isAdmin ? adminlinks : userlinks;
+  const links = isAdmin ? adminLinks : userLinks;
 
   return (
     <div className="min-h-screen w-[260px]  fixed top-0 left-0 bg-primary py-8">

@@ -17,6 +17,10 @@ body {
 
 @layer components {
 
+  .input {
+    @apply block w-full px-4 py-3 text-sm font-inter rounded-sm border border-gray-300 shadow-sm focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400; 
+  }
+
   /* https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje */
   .loader {
     width: 45px;
