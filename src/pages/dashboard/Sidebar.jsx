@@ -1,11 +1,12 @@
-import { CalendarCheck2, CalendarDays, Home, Mail, Menu, MessageSquare, ShoppingBag, ShoppingCart, Wallet } from "lucide-react"
+import { Book, CalendarCheck2, CalendarDays, Home, Mail, Menu, MessageSquare, ShoppingBag, ShoppingCart, Users2, Utensils, Wallet } from "lucide-react"
 import { Logo } from "../../components/Logo"
 import { NavLink, useLocation } from "react-router-dom"
 
 export const Sidebar = () => {
   const { pathname } = useLocation()
+  const isAdmin = true;
 
-  const links = [
+  const userlinks = [
     {
       label: 'User Home',
       to: '/dashboard/user-home',
@@ -38,6 +39,34 @@ export const Sidebar = () => {
     },
   ]
 
+    const adminlinks = [
+    {
+      label: 'Admin Home',
+      to: '/dashboard/user-home',
+      Icon: Home
+    },
+    {
+      label: 'Add Items',
+      to: '/dashboard/add-items',
+      Icon: Utensils
+    },
+    {
+      label: 'Manage Items',
+      to: '/dashboard/items',
+      Icon: Menu
+    },
+    {
+      label: 'Mange Bookings',
+      to: '/dashboard/bookings',
+      Icon: Book
+    },
+    {
+      label: 'All Users',
+      to: '/dashboard/users',
+      Icon: Users2
+    }
+  ]
+
     const navLinks = [
     {
       label: "Home",
@@ -61,6 +90,8 @@ export const Sidebar = () => {
     },
 
   ];
+
+  const links = isAdmin ? adminlinks : userlinks;
 
   return (
     <div className="min-h-screen w-[260px]  fixed top-0 left-0 bg-primary py-8">

@@ -62,6 +62,7 @@ export default function RegisterPage() {
             name: data.name,
             email: data.email,
             image: url,
+            role: 'user',
             uid: userCredentials.user.uid,
             createdAt: new Date().toISOString()
           }

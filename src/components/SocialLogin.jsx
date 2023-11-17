@@ -22,6 +22,7 @@ export const SocialLogin = () => {
           name: user.displayName,
           email: user.email,
           image: user.photoURL,
+          role: 'user',
           uid: user.uid,
           createdAt: new Date().toISOString()
         })
