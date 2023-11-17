@@ -20,6 +20,7 @@ import { useNavigate } from 'react-router-dom';
 import { SocialLogin } from '../../components/SocialLogin';
 import { ImageUpload } from '../../components/ImageUpload';
 import { useState } from 'react';
+import { useAxiosPublic } from '../../hooks/useAxiosPublic';
 
     function Copyright(props) {
       return (
@@ -40,29 +41,44 @@ import { useState } from 'react';
 const defaultTheme = createTheme();
 
 export default function RegisterPage() {
-  const { createNewUser, updateUser, reset } = useAuth()
+  const { createNewUser, updateUser } = useAuth()
   const navigate = useNavigate()
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, reset } = useForm()
   const [ url, setUrl] = useState(null)
+  const axiosPublic = useAxiosPublic()
 
   const onSubmit = async(data) => {
     try {
+    if(!url || !data.name || !data.email || !data.password) throw new Error('Please fill all the fields')
+
       const userCredentials = await createNewUser(data.email, data.password)
       if(userCredentials.user) {
-       const userCred = await updateUser(data.name, 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww')
+       await updateUser(data.name, url)
 
-        if(userCred.user) {
-          // TODO: add user to mongodb
-          
-          Swal.fire({
-            icon: "success",
-            title: "Account created successfully!",
-            showConfirmButton: false,
-            timer: 1500
-          });
-          reset()
-          navigate('/')
-        }
+
+
+          // add user to mongodb
+          const userData = {
+            name: data.name,
+            email: data.email,
+            image: url,
+            uid: userCredentials.user.uid,
+            createdAt: new Date().toISOString()
+          }
+
+          const res = await axiosPublic.post('/users', userData)
+
+          if(res.data.acknowledged){
+            Swal.fire({
+              icon: "success",
+              title: "Account created successfully!",
+              showConfirmButton: false,
+              timer: 1500
+            });
+            reset()
+            navigate('/')
+          }
+
       }
     } catch (error) {
       Swal.fire({
@@ -94,7 +110,7 @@ export default function RegisterPage() {
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
-              my: 8,
+              my: 4,
               mx: 4,
               display: 'flex',
               flexDirection: 'column',
