@@ -1,10 +1,14 @@
 import { Book, CalendarCheck2, CalendarDays, Home, Mail, Menu, MessageSquare, ShoppingBag, ShoppingCart, Users2, Utensils, Wallet } from "lucide-react"
 import { Logo } from "../../components/Logo"
 import { NavLink, useLocation } from "react-router-dom"
+import { useAdmin } from "../../hooks/useAdmin"
+import { PageLoader } from "../../components/PageLoader"
 
 export const Sidebar = () => {
   const { pathname } = useLocation()
-  const isAdmin = true;
+  const { isAdmin, isPending } = useAdmin();
+
+  if(isPending) return <PageLoader/>
 
   const userlinks = [
     {

@@ -8,7 +8,7 @@ export const PrivateRoute = ({ children }) => {
 
   if (isLoading) return <PageLoader/>
 
-  if (!user) return <Navigate to="/login" state={{ from: location }}/>
+  if (!user) return <Navigate to="/login" state={{ from: location }} replace/>
   
   return children;
 }

@@ -14,15 +14,17 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async user => {
+      setUser(user)
       if(user) {
         const res  = await axiosPublic.post('/jwt', {
           email: user.email
         })
-        localStorage.setItem('token', res.data.token)
+
+        if(res.data.token)
+          localStorage.setItem('bistro-token', res.data.token)
       } else {
-        localStorage.removeItem('token')
+        localStorage.removeItem('bistro-token')
       }
-      setUser(user)
       setIsLoading(false)
     })
 
