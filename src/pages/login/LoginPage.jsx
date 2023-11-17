@@ -18,6 +18,7 @@ import bg from '../../assets/others/authentication1.png'
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/authContext';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { SocialLogin } from '../../components/SocialLogin';
 
 function Copyright(props) {
   return (
@@ -164,6 +165,7 @@ export default function LoginPage() {
               >
                 Sign In
               </Button>
+              <SocialLogin/>
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">

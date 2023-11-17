@@ -63,18 +63,20 @@ export const Sidebar = () => {
   ];
 
   return (
-    <div className="min-h-screen w-[260px] fixed top-0 left-0 bg-primary p-8">
-      <Logo/>
+    <div className="min-h-screen w-[260px]  fixed top-0 left-0 bg-primary py-8">
+      <div className="text-center w-full">
+        <Logo/>
+      </div>
       <nav className="mt-8">
-        <ul className="flex flex-col space-y-3">
+        <ul className="flex flex-col space-y-1">
           {links.map(link => <li key={link.to} >
-            <NavLink to={link.to} className={`uppercase font-medium flex items-center space-x-4 hover:text-gray-200 transition ${pathname === link.to && 'text-white'}`}><link.Icon className="h-6 w-6"/> <span>{link.label}</span></NavLink>
+            <NavLink to={link.to} className={`uppercase font-medium flex items-center space-x-4 hover:text-gray-200 transition px-8 py-2 ${pathname === link.to && 'bg-white hover:text-black'}`}><link.Icon className="h-6 w-6"/> <span>{link.label}</span></NavLink>
           </li>)}
         </ul>
         <hr className="my-6"/>
         <ul className="flex flex-col space-y-3">
           {navLinks.map(link => <li key={link.to} >
-            <NavLink to={link.to} className="uppercase font-medium flex items-center space-x-4 hover:text-gray-200 transition"><link.Icon className="h-6 w-6"/> <span>{link.label}</span></NavLink>
+            <NavLink to={link.to} className="uppercase font-medium flex items-center px-8 space-x-4 hover:text-gray-200 transition"><link.Icon className="h-6 w-6"/> <span>{link.label}</span></NavLink>
           </li>)}
         </ul>
       </nav>

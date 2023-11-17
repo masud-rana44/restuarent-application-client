@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Logo } from "./Logo";
 import Badge from '@mui/material/Badge';
 import {  Menu, ShoppingCart, X} from "lucide-react";
@@ -10,6 +10,7 @@ export const Navbar = () => {
   const { pathname } = useLocation()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { cart} = useCart()
+  const navigate  = useNavigate()
 
   const links = [
     {
@@ -52,7 +53,8 @@ export const Navbar = () => {
           ))}
         </ul>
         <Badge badgeContent={cart?.length || 0} color="primary">
-          <ShoppingCart className="w-6 h-6 cursor-pointer" />
+          <ShoppingCart onClick={() => navigate('/dashboard/cart')} className="w-6 h-6 cursor-pointer" />
+
         </Badge>
           <UserIcon/>
       </nav>
@@ -61,7 +63,7 @@ export const Navbar = () => {
       {/* for mobile */}
       <div className="lg:hidden flex items-center space-x-4">
         <Badge badgeContent={cart?.length || 0} color="primary">
-       <ShoppingCart className="w-6 h-6 cursor-pointer" />
+       <ShoppingCart  onClick={() => navigate('/dashboard/cart')}  className="w-6 h-6 cursor-pointer" />
        </Badge>
           <UserIcon/>
 

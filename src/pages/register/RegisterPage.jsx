@@ -17,19 +17,23 @@ import { useForm } from "react-hook-form"
 import bg from '../../assets/others/authentication1.png'
 import { useAuth } from '../../contexts/authContext';
 import { useNavigate } from 'react-router-dom';
+import { SocialLogin } from '../../components/SocialLogin';
+import { ImageUpload } from '../../components/ImageUpload';
+import { useState } from 'react';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+    function Copyright(props) {
+      return (
+        <Typography variant="body2" color="text.secondary" align="center" {...props}>
+          {'Copyright © '}
+          <Link color="inherit" href="https://mui.com/">
+            Your Website
+          </Link>{' '}
+          {new Date().getFullYear()}
+          {'.'}
+        </Typography>
+      );
+    }
+
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -39,21 +43,26 @@ export default function RegisterPage() {
   const { createNewUser, updateUser, reset } = useAuth()
   const navigate = useNavigate()
   const { register, handleSubmit } = useForm()
+  const [ url, setUrl] = useState(null)
 
   const onSubmit = async(data) => {
     try {
       const userCredentials = await createNewUser(data.email, data.password)
       if(userCredentials.user) {
-        await updateUser(data.name, 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww')
+       const userCred = await updateUser(data.name, 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww')
 
-        Swal.fire({
-          icon: "success",
-          title: "Account created successfully!",
-          showConfirmButton: false,
-          timer: 1500
-        });
-        reset()
-        navigate('/')
+        if(userCred.user) {
+          // TODO: add user to mongodb
+          
+          Swal.fire({
+            icon: "success",
+            title: "Account created successfully!",
+            showConfirmButton: false,
+            timer: 1500
+          });
+          reset()
+          navigate('/')
+        }
       }
     } catch (error) {
       Swal.fire({
@@ -99,6 +108,10 @@ export default function RegisterPage() {
               Sign up
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
+              <div className='flex items-center space-x-10'>
+                <ImageUpload url={url} setUrl={setUrl}/>
+              {url && <img src={url} alt="profile" className='w-20 h-20 rounded-full object-cover'/>}
+              </div>
               <TextField
                 margin="normal"
                 required
@@ -148,6 +161,7 @@ export default function RegisterPage() {
               >
                 Sign Up
               </Button>
+              <SocialLogin/>
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">
