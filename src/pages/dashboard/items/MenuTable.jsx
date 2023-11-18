@@ -5,10 +5,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Edit, Trash2 } from 'lucide-react';
+import { Edit,  Trash2 } from 'lucide-react';
 import Swal from 'sweetalert2';
 import { useAxios } from '../../../hooks/useAxios';
 import { useMenu } from '../../../hooks/useMenu';
+import { Link } from 'react-router-dom';
 
 export default function MenuTable({ data }) {
   const axiosSecure = useAxios()
@@ -17,7 +18,7 @@ export default function MenuTable({ data }) {
   const handleDeleteItem = (item) => {
     Swal.fire({
     title: "Are you sure?",
-    text: "You won't be able to revert this!",
+    text: `You want to delete ${item.name} from menu.`,
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
@@ -70,9 +71,9 @@ export default function MenuTable({ data }) {
                 ${row.price}
               </TableCell>
               <TableCell >
-                <div className='px-2 py-3 rounded-sm bg-primary w-12 flex items-center justify-center text-white hover:opacity-75 transition cursor-pointer'>
+                <Link to={`/dashboard/items/update/${row._id}`} className='px-2 py-3 rounded-sm bg-primary w-12 flex items-center justify-center text-white hover:opacity-75 transition cursor-pointer'>
                   <Edit size={18} />
-                </div>
+                </Link>
               </TableCell>
               <TableCell >
                 <div className='px-2 py-3 rounded-sm bg-red-600 w-12 flex items-center justify-center text-white hover:opacity-75 transition cursor-pointer'>

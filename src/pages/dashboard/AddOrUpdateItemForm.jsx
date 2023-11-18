@@ -7,21 +7,23 @@ import { useAxiosPublic } from "../../hooks/useAxiosPublic"
 import { useAxios } from "../../hooks/useAxios"
 import Swal from "sweetalert2"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 const imageBbUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_APP_IMAGEBB_API_KEY}`
 
-export const AddOrUpdateItemForm = () => {
-  const { register, handleSubmit, formState: {errors}, reset, } = useForm()
+export const AddOrUpdateItemForm = ({ item }) => {
+  const { register, handleSubmit, formState: {errors}, reset } = useForm()
   const axiosPublic = useAxiosPublic()
   const axiosSecure = useAxios()
   const [ isLoading, setIsLoading ] = useState(false)
+  const navigate = useNavigate()
 
   const onSubmit = async (data) => {
     setIsLoading(true)
     const { name, category, price, recipe, image } = data;
 
     // check all the values are there
-    if (!name || !category || !price || !recipe || !image) {
+    if (!name || !category || !price || !recipe ) {
       return Swal.fire({
                 icon: "error",
                 title: "Oops...",
@@ -44,23 +46,36 @@ export const AddOrUpdateItemForm = () => {
 
       if(res.data?.data?.display_url) {
         //  add the item to the database
-        const item = {
+        const newItem = {
           name,
           category,
-          price,
+          price: parseFloat(price),
           recipe,
-          image: res.data?.data?.display_url
+          image: res.data?.data?.display_url || item.image
         }
 
-        const resMenu = await axiosSecure.post('/menus', item)
-        if(resMenu.data.insertedId) {
-          reset()
-          Swal.fire({
-                icon: "success",
-                title: "Success!",
-                text: "Item added successfully!",
-        });
-        }
+       if(item) {
+         const resMenu = await axiosSecure.patch(`/menus/${item._id}`, newItem)
+          if(resMenu.data.modifiedCount > 0) {
+            reset()
+            Swal.fire({
+                  icon: "success",
+                  title: "Success!",
+                  text: `${name} updated successfully!`,
+          });
+          navigate('/dashboard/items')
+          }
+       } else {
+        const resMenu = await axiosSecure.post('/menus', newItem)
+          if(resMenu.data.insertedId) {
+            reset()
+            Swal.fire({
+                  icon: "success",
+                  title: "Success!",
+                  text: "Item added successfully!",
+            });
+          }
+       }
       }
     } catch (error) {
       Swal.fire({
@@ -76,14 +91,14 @@ export const AddOrUpdateItemForm = () => {
   return (
     <FormLayout onSubmit={handleSubmit(onSubmit)} >
       <FormRow label='Recipe Name*' error={errors?.name?.message}>
-        <input disabled={isLoading} className="input" type="text" id="name" placeholder="Recipe Name" {...register('name', {
+        <input defaultValue={item && item.name} disabled={isLoading} className="input" type="text" id="name" placeholder="Recipe Name" {...register('name', {
           required: 'Recipe name is required'
         })}/>
       </FormRow>
 
       <div className="flex items-center space-x-6">
         <FormRow label="Category*" error={errors?.category?.message}>
-          <select disabled={isLoading} className="input" id="category" {...register('category', {
+          <select defaultValue={item && item.category} disabled={isLoading} className="input" id="category" {...register('category', {
           required: 'Category is required'
         })}>
             <option value=''>Choose a category?</option>
@@ -96,24 +111,24 @@ export const AddOrUpdateItemForm = () => {
         </FormRow>
 
         <FormRow label="Price*" error={errors?.price?.message}>
-          <input disabled={isLoading} className="input" type="number" id="price" placeholder="Price" {...register('price', {
+          <input defaultValue={item && item.price} disabled={isLoading} className="input" type="number" id="price" step='any' placeholder="Price" {...register('price', {
           required: 'Price is required'
           })}/>
         </FormRow>
       </div>
 
         <FormRow label="Recipe Details*" error={errors?.recipe?.message}>
-          <textarea disabled={isLoading}  className="input" rows={6} id="recipeDetails" placeholder="Recipe Details" {...register('recipe', {
+          <textarea defaultValue={item && item.recipe} disabled={isLoading}  className="input" rows={6} id="recipeDetails" placeholder="Recipe Details" {...register('recipe', {
           required: 'Recipe details is required'
           })}/>
         </FormRow>
 
         <FormRow label={`Recipe Image*`} error={errors?.image?.message}>
-          <input disabled={isLoading} id="image"  type="file" accept="image/*"  {...register('image', {
+          <input  disabled={isLoading} id="image"  type="file" accept="image/*"  {...register('image', {
           required: 'Recipe image is required'
           })}/>
         </FormRow>
-        <Button disabled={isLoading} type='primary'><span>Add Item</span> {isLoading ? <Loader2 size={20} className="animate-spin"/> : <Utensils size={20}/>}</Button>
+        <Button disabled={isLoading} type='primary'><span>{item ? 'Update Item' : 'Add Item'}</span> {isLoading ? <Loader2 size={20} className="animate-spin"/> : <Utensils size={20}/>}</Button>
     </FormLayout>
   )
 }
