@@ -69,8 +69,8 @@ export default function CartTable({rows}) {
               </TableCell>
               <TableCell >${row.price}</TableCell>
               <TableCell >
-                <div className='p-2 rounded-sm '>
-                  <Trash2 onClick={() => handleDeleteItem(row._id)} className='text-red-600 cursor-pointer'/>
+                <div onClick={() => handleDeleteItem(row._id)}  className='px-2 py-3 rounded-sm bg-red-600 w-12 flex items-center justify-center text-white hover:opacity-75 transition cursor-pointer'>
+                  <Trash2 size={18} />
                 </div>
               </TableCell>
 

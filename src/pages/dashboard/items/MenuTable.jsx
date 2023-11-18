@@ -76,8 +76,8 @@ export default function MenuTable({ data }) {
                 </Link>
               </TableCell>
               <TableCell >
-                <div className='px-2 py-3 rounded-sm bg-red-600 w-12 flex items-center justify-center text-white hover:opacity-75 transition cursor-pointer'>
-                  <Trash2 size={18} onClick={() => handleDeleteItem(row)}/>
+                <div onClick={() => handleDeleteItem(row)} className='px-2 py-3 rounded-sm bg-red-600 w-12 flex items-center justify-center text-white hover:opacity-75 transition cursor-pointer'>
+                  <Trash2 size={18} />
                 </div>
               </TableCell>
 

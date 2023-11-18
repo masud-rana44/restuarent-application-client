@@ -8,8 +8,10 @@ const MyCartPage = () => {
   const { cart, isPending } = useCart()
 
   if(isPending) return <PageLoader/>
+  
+  if(cart.length === 0) return <p className="text-center text-xl font-bold font-cinzel text-dark h-96 flex items-center justify-center">No Items Found</p>
 
-  const totalPrice = cart?.reduce((acc, item) => acc + item.price, 0)
+  const totalPrice = cart?.reduce((acc, item) => acc + parseFloat(item.price), 0)
 
   return (
     <div className="mx-16 py-6">

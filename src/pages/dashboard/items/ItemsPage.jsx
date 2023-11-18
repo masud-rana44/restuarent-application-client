@@ -8,6 +8,8 @@ const ItemsPage = () => {
 
   if(isPending) return <PageLoader/>
 
+  if(menus.length === 0) return <p className="text-center text-xl font-bold font-cinzel text-dark h-96 flex items-center justify-center">No Items Found</p>
+
   return (
    <div className="mx-16 py-6">
       <SectionHeading title='MANAGE ALL ITEMS' subtitle='---Hurry Up!---'/>
@@ -16,7 +18,7 @@ const ItemsPage = () => {
           <p>Total Items: {menus.length}</p>
         </div>
 
-        <MenuTable data={menus}/>
+         <MenuTable data={menus}/>
       </div>
     </div>
   )

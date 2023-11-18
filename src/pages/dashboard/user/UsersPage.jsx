@@ -8,6 +8,8 @@ const UsersPage = () => {
 
   if(isPending) return <PageLoader/>
 
+  if(users.length === 0) return <p className="text-center text-xl font-bold font-cinzel text-dark h-96 flex items-center justify-center">No User Found</p>
+
   return (
     <div className="mx-16 py-6">
       <SectionHeading title='MANAGE ALL USERS' subtitle='---How many??---'/>
