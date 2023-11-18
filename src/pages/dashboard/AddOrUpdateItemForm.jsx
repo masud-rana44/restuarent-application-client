@@ -30,11 +30,17 @@ export const AddOrUpdateItemForm = () => {
     }
 
     // send the image to imageBb
-    const formData = new FormData()
-    formData.append('image', image[0])
+    // const formData = new FormData()
+    // formData.append('image', image[0])
+
+    const imageFile = { image: image[0]}
     
     try {
-      const res = await axiosPublic.post(imageBbUrl, formData)
+      const res = await axiosPublic.post(imageBbUrl, imageFile, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
 
       if(res.data?.data?.display_url) {
         //  add the item to the database

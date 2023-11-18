@@ -1,20 +1,25 @@
 import { PageBanner } from "../../components/PageBanner"
 import bannerImg from '../../assets/menu/banner3.jpg'
 import { Offer } from "./Offer"
-import { useMenuData } from "../../hooks/useMenuData"
 import { Deserts } from "./Deserts"
 import { Pizza } from "./Pizza"
 import { Salads } from "./Salads"
 import { Soups } from "./Soups"
 import { PageTitle } from "../../components/PageTitle"
+import { useMenu } from "../../hooks/useMenu"
+import { Loader2 } from "lucide-react"
 
 const MenuPage = () => {
-  const { menu } = useMenuData()
+  const { menus, isPending } = useMenu()
 
-  const deserts = menu.filter(item => item.category === 'dessert')
-  const pizza = menu.filter(item => item.category === 'pizza')
-  const salads = menu.filter(item => item.category === 'salad')
-  const soups = menu.filter(item => item.category === 'soup')
+    if(isPending) return <div className="w-full my-28 flex items-center justify-center">
+    <Loader2 className="animate-spin text-primary"/>
+  </div>
+
+  const deserts = menus.filter(item => item.category === 'dessert')
+  const pizza = menus.filter(item => item.category === 'pizza')
+  const salads = menus.filter(item => item.category === 'salad')
+  const soups = menus.filter(item => item.category === 'soup')
 
   return (
     <div>

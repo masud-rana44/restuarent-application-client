@@ -5,35 +5,32 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Trash2 } from 'lucide-react';
+import { Edit, Trash2 } from 'lucide-react';
 import Swal from 'sweetalert2';
 import { useAxios } from '../../../hooks/useAxios';
-import { useUser } from '../../../hooks/useUser';
-import { RoleMenu } from './RoleMenu';
+import { useMenu } from '../../../hooks/useMenu';
 
-
-
-export default function UsersTable({data}) {
+export default function MenuTable({ data }) {
   const axiosSecure = useAxios()
-  const { refetchUsersData } = useUser()
+  const { refetchMenus } = useMenu()
 
-  const handleDeleteUser = (id) => {
+  const handleDeleteItem = (item) => {
     Swal.fire({
-  title: "Are you sure?",
-  text: "You won't be able to revert this!",
-  icon: "warning",
-  showCancelButton: true,
-  confirmButtonColor: "#3085d6",
-  cancelButtonColor: "#d33",
-  confirmButtonText: "Yes, delete it!"
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!"
 }).then(async(result) => {
   if (result.isConfirmed) {
-    const res = await axiosSecure.delete(`/users/${id}`)
+    const res = await axiosSecure.delete(`/menus/${item._id}`)
     if(res.data.deletedCount > 0) {
-      refetchUsersData()
+      refetchMenus()
       Swal.fire({
         title: "Deleted!",
-        text: "User deleted successfully.",
+        text: `${item.name} deleted successfully.`,
         icon: "success"
       });
     }
@@ -46,14 +43,15 @@ export default function UsersTable({data}) {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead className='bg-primary '>
           <TableRow className='text-white font-medium'>
-            <TableCell>No</TableCell>
-            <TableCell>IMAGE</TableCell>
-            <TableCell >NAME</TableCell>
-            <TableCell >ROLE</TableCell>
-            <TableCell >ACTION</TableCell>
+            <TableCell>#</TableCell>
+            <TableCell>ITEM IMAGE</TableCell>
+            <TableCell >ITEM NAME</TableCell>
+            <TableCell >PRICE</TableCell>
+            <TableCell >UPDATE</TableCell>
+            <TableCell >DELETE</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody className='text-dark'>
           {data.map((row, index) => (
             <TableRow
               key={row._id}
@@ -63,17 +61,22 @@ export default function UsersTable({data}) {
                 <div className=' font-medium'>{index + 1}</div>
               </TableCell>
               <TableCell component="th" scope="row">
-                <img src={row.image} className='h-12 w-12 object-cover rounded-full'/>
+                <img src={row.image} className='h-14 w-14 object-cover rounded-sm'/>
               </TableCell>
               <TableCell component="th" scope="row">
-                {row.name}
+                <span className='font-medium'>{row.name}</span>
               </TableCell>
               <TableCell >
-                <RoleMenu role={row.role || "user"} id={row._id} name={row.name}/>
+                ${row.price}
               </TableCell>
               <TableCell >
-                <div className='p-2 rounded-sm '>
-                  <Trash2 onClick={() => handleDeleteUser(row._id)} className='text-red-600 cursor-pointer'/>
+                <div className='px-2 py-3 rounded-sm bg-primary w-12 flex items-center justify-center text-white hover:opacity-75 transition cursor-pointer'>
+                  <Edit size={18} />
+                </div>
+              </TableCell>
+              <TableCell >
+                <div className='px-2 py-3 rounded-sm bg-red-600 w-12 flex items-center justify-center text-white hover:opacity-75 transition cursor-pointer'>
+                  <Trash2 size={18} onClick={() => handleDeleteItem(row)}/>
                 </div>
               </TableCell>
 

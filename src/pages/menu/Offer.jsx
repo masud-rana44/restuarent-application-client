@@ -1,12 +1,20 @@
 import { SectionHeading } from "../../components/SectionHeading"
-import { useMenuData } from "../../hooks/useMenuData"
 import { Container } from "../../components/Container"
 import { MenuItems } from "../../components/MenuItems"
 import { Button } from "../../components/Button"
+import { useMenu } from "../../hooks/useMenu"
+import { Loader2 } from "lucide-react"
 
 export const Offer = () => {
-  const { menu } = useMenuData()
-  const offeredMenu = menu.filter(item => item.category === 'offered')
+  const { menus, isPending } = useMenu()
+
+
+    if(isPending) return <div className="w-full my-28 flex items-center justify-center">
+    <Loader2 className="animate-spin text-primary"/>
+  </div>
+
+
+  const offeredMenu = menus.filter(item => item.category === 'offered')
 
   return (
     <Container className='mt-20'>

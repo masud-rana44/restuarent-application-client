@@ -1,18 +1,23 @@
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import { useMenuData } from '../../hooks/useMenuData';
 import { FoodCard } from '../../components/FoodCard';
 import { Container } from '../../components/Container';
+import { useMenu } from '../../hooks/useMenu';
+import { Loader2 } from 'lucide-react';
 
 export const ShopTabs = () => {
-  const { menu } = useMenuData()
+  const { menus, isPending } = useMenu()
   const categories = ['salads','pizza' , 'soups', 'deserts', 'drinks']
 
-  const deserts = menu.filter(item => item.category === 'dessert')
-  const pizza = menu.filter(item => item.category === 'pizza')
-  const salads = menu.filter(item => item.category === 'salad')
-  const soups = menu.filter(item => item.category === 'soup')
-  const drinks = menu.filter(item => item.category === 'drinks')
+    if(isPending) return <div className="w-full my-28 flex items-center justify-center">
+    <Loader2 className="animate-spin text-primary"/>
+  </div>
+
+  const deserts = menus.filter(item => item.category === 'dessert')
+  const pizza = menus.filter(item => item.category === 'pizza')
+  const salads = menus.filter(item => item.category === 'salad')
+  const soups = menus.filter(item => item.category === 'soup')
+  const drinks = menus.filter(item => item.category === 'drinks')
 
   const categoriesData = [salads, pizza , soups, deserts, drinks]
 
