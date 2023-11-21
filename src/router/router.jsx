@@ -16,6 +16,7 @@ import { AdminRoute } from "../components/AdminRoute";
 import ItemsPage from "../pages/dashboard/items/ItemsPage";
 import AddItemPage from "../pages/dashboard/add-items/AddItemPage";
 import UpdateItemsPage from "../pages/dashboard/update-items/UpdateItemsPage";
+import PaymentPage from "../pages/dashboard/payment/PaymentPage";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,7 @@ const router = createBrowserRouter([
     </PrivateRoute>,
     children: [
       {path: '/dashboard/cart', element: <MyCartPage/>},
+      {path: 'payment', element: <PaymentPage/>},
 
       // admin routes
       {path: '/dashboard/users', element: <AdminRoute><UsersPage/></AdminRoute>},

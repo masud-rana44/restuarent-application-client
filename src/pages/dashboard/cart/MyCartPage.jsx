@@ -3,6 +3,7 @@ import { PageLoader } from "../../../components/PageLoader"
 import { SectionHeading } from "../../../components/SectionHeading"
 import { useCart } from "../../../hooks/useCart"
 import CartTable from "./CartTable"
+import { Link } from 'react-router-dom';
 
 const MyCartPage = () => {
   const { cart, isPending } = useCart()
@@ -21,7 +22,9 @@ const MyCartPage = () => {
         <div className="text-2xl font-bold font-cinzel mb-10 flex justify-between uppercase">
           <p>Total Orders: {cart.length}</p>
           <p>Total Price: ${totalPrice}</p>
-          <Button variant="contained" >PAY</Button>
+          <Link to='/dashboard/payment'>
+            <Button disabled={totalPrice === 0} variant="contained" >PAY</Button>
+          </Link>
         </div>
 
         <CartTable rows={cart}/>

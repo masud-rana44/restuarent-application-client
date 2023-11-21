@@ -23,7 +23,7 @@ export const Sidebar = () => {
     },
     {
       label: 'Payment History',
-      to: '/dashboard/payment',
+      to: '/dashboard/payment-history',
       Icon: Wallet
     },
     {
