@@ -72,7 +72,7 @@ export default function LoginPage() {
         title: "Oops...",
         text: error?.message || "Something went wrong!",
       });
-      setIsLoading(false)
+      // setIsLoading(false)
     }
 
   };

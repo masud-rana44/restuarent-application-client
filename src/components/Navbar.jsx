@@ -5,9 +5,13 @@ import {  Menu, ShoppingCart, X} from "lucide-react";
 import { UserIcon } from "./UserIcon";
 import { useState } from "react";
 import { useCart } from "../hooks/useCart";
+import { useAdmin } from "../hooks/useAdmin";
+import { useAuth } from "../contexts/AuthContext";
 
 export const Navbar = () => {
   const { pathname } = useLocation()
+  const { isAdmin } = useAdmin()
+  const { user } = useAuth()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { cart} = useCart()
   const navigate  = useNavigate()
@@ -23,7 +27,7 @@ export const Navbar = () => {
     },
     {
       label: "Dashboard",
-      to: "/dashboard",
+      to: isAdmin ? "/dashboard/admin-home" : "/dashboard/user-home",
     },
     {
       label: "Our Menu",
@@ -45,7 +49,7 @@ export const Navbar = () => {
       <nav className="hidden  font-medium text-[15px] uppercase lg:flex items-center space-x-6">
         <ul className="flex items-center gap-x-6">
             {links.map((link) => (
-            <li key={link.to} className={pathname === link.to && 'text-yellow-400'}>
+          (user || link.label !== 'Dashboard') && <li key={link.to} className={pathname === link.to && 'text-yellow-400'}>
               <Link to={link.to} >
                 {link.label}
               </Link>

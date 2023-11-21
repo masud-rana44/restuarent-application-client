@@ -1,9 +1,10 @@
-import { Outlet } from "react-router-dom"
+import { Outlet} from "react-router-dom"
 import { Sidebar } from "./Sidebar"
 
 export const DashboardLayout = () => {
+
   return (
-    <div>
+    <div> 
       <Sidebar/>
       <div className="pl-[260px] bg-gray-100 min-h-screen">
         <Outlet/>

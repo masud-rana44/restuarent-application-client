@@ -46,7 +46,7 @@ export const Sidebar = () => {
     const adminLinks = [
     {
       label: 'Admin Home',
-      to: '/dashboard/user-home',
+      to: '/dashboard/admin-home',
       Icon: Home
     },
     {

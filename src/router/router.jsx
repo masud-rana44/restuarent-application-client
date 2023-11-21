@@ -52,7 +52,7 @@ const router = createBrowserRouter([
       {path: '/dashboard/payment-history', element: <PaymentHistoryPage/>},
 
       // admin routes
-      {path: '/dashboard/user-home', element: <AdminRoute><AdminHome/></AdminRoute>},
+      {path: '/dashboard/admin-home', element: <AdminRoute><AdminHome/></AdminRoute>},
       {path: '/dashboard/users', element: <AdminRoute><UsersPage/></AdminRoute>},
       {path: '/dashboard/items', element: <AdminRoute><ItemsPage/></AdminRoute>},
       {path: '/dashboard/items/new', element: <AdminRoute><AddItemPage/></AdminRoute>},
