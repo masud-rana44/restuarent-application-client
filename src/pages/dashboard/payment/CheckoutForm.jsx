@@ -6,14 +6,16 @@ import { PageLoader } from "../../../components/PageLoader"
 import { useEffect, useState } from "react"
 import { useAxios } from "../../../hooks/useAxios"
 import { useAuth } from "../../../contexts/authContext"
+import { useNavigate } from "react-router-dom"
 
 const CheckoutForm = () => {
   const stripe = useStripe()
   const elements = useElements()
   const [clientSecret, setClientSecret] = useState('')
   const { user } = useAuth()
-  const { cart, isPending, error } = useCart()
+  const { cart, isPending, error, cartDataRefetch } = useCart()
   const axiosSecure = useAxios()
+  const navigate = useNavigate()
 
   const totalPayable = cart?.reduce((total, item) => total + parseFloat(item.price), 0)
 
@@ -84,6 +86,36 @@ const CheckoutForm = () => {
             showConfirmButton: false,
             timer: 1500
           });
+
+          // save the order in database
+          const order = {
+            userId: user?.uid,
+            email: user?.email,
+            cartIds: cart.map(item => item._id),
+            menuIds: cart.map(item => item.menuId),
+            total: totalPayable,
+            paymentId: paymentIntent.id,
+            status: 'pending',
+            createdAt: new Date().toISOString(),
+          }
+
+          
+
+          try {
+            const res = await axiosSecure.post('/orders', order)
+
+            if(res.data.resultOrder.acknowledged) {
+              cartDataRefetch()
+              navigate('/dashboard/payment-history')
+            }
+          }catch (error) {
+            console.log(error)
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: confirmError?.message || "Something went wrong!",
+            });
+          }
     }
   }
 
